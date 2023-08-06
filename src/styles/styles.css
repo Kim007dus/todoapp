@@ -47,6 +47,13 @@ h1 {
     margin: 2rem 0;
 }
 
+h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 2rem 0;
+}
+
 /*----------------- header -----------------*/
 
 header {
@@ -67,24 +74,47 @@ main {
     justify-content: center;
     background-color: var(--color-bg-section);
     padding: 2rem 0;
-    max-width: 75%;
+    max-width: 85%;
     margin-inline: auto;
 }
 
-button {
+.button {
     background-color: var(--color-bg-button);
     color: var(--color-text-button);
     border: none;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
+    border-radius: 12px;
+    padding: 0.5rem 3.2rem;
+    font-size: 0.8rem;
     font-weight: 500;
     cursor: pointer;
+    margin: 0.5rem 0.5rem;
+    text-align: center;
+
+}
+
+.button img {
+    width: 25px;
+    aspect-ratio: 1/1;
+
+}
+
+.sort {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.button:hover {
+    background-color: var(--color-bg-title);
+    color: var(--color-text-button);
 }
 
 form {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     margin: 2rem 0;
@@ -94,9 +124,9 @@ form {
 label {
     display: flex;
     flex-direction: column;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    text-align: center;
+    text-align: left;
     margin: 2rem 0;
     gap: 10px;
 }
@@ -107,35 +137,89 @@ label {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 2rem 0;
+    margin: 0.5rem 0;
+    position: relative;
 }
 
 .toDoList button {
     background-color: var(--color-bg-section);
+    position: absolute;
+    right: 10px;
+    border: none;
+    cursor: pointer;
+
 }
 
 li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     list-style: none;
     font-size: 1rem;
     font-weight: 500;
-    text-align: center;
     margin: 1rem 0;
-    gap: 10px;
+    gap: 25px;
     border: 1px solid var(--color-bg-title);
     border-radius: 5px;
-    padding: 20px;
-
+    padding: 0.5rem 1rem;
 }
 
 span {
-    padding: 0 10px;
+    padding: 0.5rem;
+
 }
 
 .notchecked {
+    color: var(--color-bg-button);
     text-decoration: none;
+    margin-right: 2.5rem;
+    margin-left: 0;
+
+
 }
 
 .checked {
-    color: var(--color-bg-title);
+    color: var(--color-bg-button);
     text-decoration: line-through;
+    margin-right: 2.5rem;
+    margin-left: 0;
 }
+
+.high {
+    background-image: url("src/assets/flag-duotone-red.svg");
+    background-repeat: no-repeat;
+    width: 25px;
+    aspect-ratio: 1/1;
+    padding: 0;
+    position: absolute;
+    right: 80px;
+
+
+}
+
+.medium {
+    background-image: url("src/assets/flag-duotone-orange.svg");
+    background-repeat: no-repeat;
+    width: 25px;
+    aspect-ratio: 1/1;
+    padding: 0;
+    position: absolute;
+    right: 80px;
+}
+
+.low {
+    background-image: url("src/assets/flag-duotone-green.svg");
+    background-repeat: no-repeat;
+    width: 25px;
+    aspect-ratio: 1/1;
+    padding: 0;
+    position: absolute;
+    right: 80px;
+}
+
+.default {
+    background-image: none;
+
+}
+

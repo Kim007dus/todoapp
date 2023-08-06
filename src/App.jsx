@@ -4,6 +4,9 @@ import trash from './assets/trash-duotone.svg';
 import TodoItem from "./components/showtodoitem.jsx";
 import Buttons from "./components/buttons.jsx";
 import arrows from './assets/arrows-down-up-duotone.svg'
+import high from './assets/flag-duotone-red.svg'
+import medium from './assets/flag-duotone-orange.svg'
+import low from './assets/flag-duotone-green.svg'
 
 
 
@@ -47,15 +50,16 @@ function App() {
 
     const handleSubmit = (e) => {
         e.preventDefault(
-            setToDoList([...toDoList, {
-                title: formState.title,
-                status: statusTask,
-                priority: formState.priority,
-                description: formState.description,
-                id: uuidv4()
-            }]))
+                setToDoList([...toDoList, {
+                    title: formState.title,
+                    status: formState.status,
+                    priority: formState.priority,
+                    description: formState.description,
+                    id: uuidv4()
+                }]))
 
     }
+
 
     const [statusTask, toggleStatusTask] = useState(true)
     // console.log(statusTask)
@@ -85,20 +89,22 @@ function App() {
                     <label htmlFor="addtask">Title
                         <input
                             type="text"
+                            maxLength={20}
                             value={formState.title}
                             id="addtask"
                             name="title"
-                            placeholder="Add the title of your to-do"
+                            placeholder="Add the title here"
                             onChange={handleChange}
                         />
                     </label>
                     <label htmlFor="adddescription">Description
                         <input
                             type="text"
+                            maxLength={30}
                             value={formState.description}
                             id="adddescription"
                             name="description"
-                            placeholder="Add the description of your to-do"
+                            placeholder="Add the description here"
                             onChange={handleChange}
                         />
                     </label>
@@ -110,12 +116,12 @@ function App() {
                             name="priority"
                             value={formState.priority}
                             onChange={handleChange}>
-                            <option value="1">High</option>
+                            <option value="1">High </option>
                             <option value="2">Medium</option>
                             <option value="3">Low</option>
                         </select>
                     </label>
-                    <button type="submit">Add</button>
+                    <button className="button" type="submit">Add</button>
                 </form>
 
                 <Buttons
@@ -125,7 +131,7 @@ function App() {
                 />
 
 
-
+                <h2>My to do's</h2>
                 <section className="toDoList">
                     <ul>
                         {toDoList.map((todo) => {

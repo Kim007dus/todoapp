@@ -1,14 +1,14 @@
 import {useState} from "react";
 import {v4 as uuidv4} from "uuid";
-
+import trash from './assets/trash-duotone.svg';
 
 function App() {
     const [toDoList, setToDoList] = useState([
         {
 
             title: "Learn html",
-            status: "Busy with it",
-            priority: "This week",
+            status: false,
+            priority: "3",
             description: "I need to learn html for real this time",
             id: uuidv4()
 
@@ -16,8 +16,8 @@ function App() {
         {
 
             title: "Learn Javascript",
-            status: "Need to start",
-            priority: "This month",
+            status: false,
+            priority: "1",
             description: "This is gonna be hard, but need to.",
             id: uuidv4()
 
@@ -26,7 +26,7 @@ function App() {
 
     const [formState, setFormState] = useState({
         title: "",
-        status: "",
+        status: false,
         priority: "",
         description: "",
         id: 0
@@ -40,13 +40,11 @@ function App() {
         });
     }
 
-
-
     const handleSubmit = (e) => {
         e.preventDefault(
             setToDoList([...toDoList, {
                 title: formState.title,
-                status: formState.status,
+                status: statusTask,
                 priority: formState.priority,
                 description: formState.description,
                 id: uuidv4()
@@ -54,74 +52,108 @@ function App() {
 
     }
 
+    const [statusTask, setStatusTask] = useState(true)
+    // console.log(statusTask)
+
+    const [sortedTasks, toggleSortedTasks] = useState(true)
 
 
-    return (
-        <>
-            <h1>To Do App</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="addtask">Title to do
-                    <input
-                        type="text"
-                        value={formState.title}
-                        id="addtask"
-                        name="title"
-                        placeholder="Add the title of your to-do"
-                        onChange={handleChange}
-                    />
-                </label>
-                <label htmlFor="adddescription">Description
-                    <input
-                        type="text"
-                        value={formState.description}
-                        id="adddescription"
-                        name="description"
-                        placeholder="Add the description of your to-do"
-                        onChange={handleChange}
-                    />
-                </label>
-                <label htmlFor="selectstatus">
-                    Select status:
-                    <select
-                        id="selectstatus"
-                        name="status"
-                        value={formState.status}
-                        onChange={handleChange}>
-                        <option value="Done">Done</option>
-                        <option value="Busy with it">Busy with it</option>
-                        <option value="Need to start">Need to start</option>
-                    </select>
-                </label>
-
-                <label htmlFor="selectpriority">
-                    Select Priority
-                    <select
-                        id="selectpriority"
-                        name="priority"
-                        value={formState.priority}
-                        onChange={handleChange}>
-                        <option value="Today">Today</option>
-                        <option value="This week">This week</option>
-                        <option value="This month">This month</option>
-                    </select>
-                </label>
-                <button type="submit">Add to your list</button>
-            </form>
-
-            <button type="button">High priority first</button>
-
-            <section className="TodoList">
-                <ul>
-                    {toDoList.map((todo) => {
-                        return <li key={todo.id}>{todo.title} {todo.description} {todo.status} {todo.priority}</li>
-                    })}
-                </ul>
-            </section>
-
-
-
-        </>
-    )
+function deleteTask (idParam) {
+    setToDoList(toDoList=> {
+        return toDoList.filter((todo) => (todo.id !== idParam))
+    })
 }
 
-export default App
+function toggleCompleted (idParam) {
+        const clonedToDoList = [...toDoList]
+    setToDoList(clonedToDoList.map ((todo) =>
+        todo.id === idParam ? {...todo, status: !todo.status} : todo)
+)}
+
+
+
+    console.log(toDoList)
+        return (
+            <> <header><h1>To Do App</h1></header>
+                <main>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="addtask">Title
+                        <input
+                            type="text"
+                            value={formState.title}
+                            id="addtask"
+                            name="title"
+                            placeholder="Add the title of your to-do"
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <label htmlFor="adddescription">Description
+                        <input
+                            type="text"
+                            value={formState.description}
+                            id="adddescription"
+                            name="description"
+                            placeholder="Add the description of your to-do"
+                            onChange={handleChange}
+                        />
+                    </label>
+
+                    <label htmlFor="selectpriority">
+                        Priority
+                        <select
+                            id="selectpriority"
+                            name="priority"
+                            value={formState.priority}
+                            onChange={handleChange}>
+                            <option value="1">High</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Low</option>
+                        </select>
+                    </label>
+                    <button type="submit">Add</button>
+                </form>
+
+                <button type="button"
+                        onClick={() => toggleSortedTasks(sortedTasks !== true)}> {sortedTasks === true ? "sorted on low priority first" : "sorted on high priority first"}</button>
+
+
+                <section className="toDoList">
+                    <ul>
+                        {toDoList.map((todo) => {
+                            if (sortedTasks !== true) {
+                                toDoList.sort((a, b) => a.priority - b.priority)
+                                    return <li key={todo.id}>
+                                    <input type="checkbox" onClick={() => {toggleCompleted(todo.id)}} />
+                                        <span className={todo.status ? 'checked': 'notchecked'}>{todo.title}</span>
+                                    <span>{todo.priority}</span>
+                                    <button type="button" onClick={() => {deleteTask(todo.id)}}><img src={trash} alt='trashicon' /></button>
+                                </li>
+                            }
+                           else if (sortedTasks !== false) {
+                               toDoList.sort((a, b) => b.priority - a.priority)
+                               return <li key={todo.id}>
+                                   <input type="checkbox" onClick={() => {toggleCompleted(todo.id)}} />
+                                   <span className={todo.status ? 'checked': 'notchecked'}>{todo.title}</span>
+                                   <span>{todo.priority}</span>
+                                   <button type="button" onClick={() => {deleteTask(todo.id)}}><img src={trash} alt='trashicon' /></button>
+                               </li>
+                        }
+                           else {
+                           return <li key={todo.id}>
+                                    <input type="checkbox" onClick={() => {toggleCompleted(todo.id)}}/>
+                                    <span className={todo.status ? 'checked': 'notchecked'}>{todo.title}</span>
+                                   <span>{todo.priority}</span>
+                                    <button type="button" onClick={() => {deleteTask(todo.id)}}><img src={trash} alt='trashicon' /></button>
+                                </li>
+                            }}
+                        )}
+
+                    </ul>
+                </section>
+                </main>
+
+            </>
+        )
+    }
+
+    export default App

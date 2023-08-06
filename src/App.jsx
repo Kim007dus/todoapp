@@ -1,6 +1,11 @@
 import {useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import trash from './assets/trash-duotone.svg';
+import TodoItem from "./components/showtodoitem.jsx";
+import Buttons from "./components/buttons.jsx";
+import arrows from './assets/arrows-down-up-duotone.svg'
+
+
 
 function App() {
     const [toDoList, setToDoList] = useState([
@@ -52,30 +57,30 @@ function App() {
 
     }
 
-    const [statusTask, setStatusTask] = useState(true)
+    const [statusTask, toggleStatusTask] = useState(true)
     // console.log(statusTask)
 
     const [sortedTasks, toggleSortedTasks] = useState(true)
 
 
-function deleteTask (idParam) {
-    setToDoList(toDoList=> {
-        return toDoList.filter((todo) => (todo.id !== idParam))
-    })
-}
+    function deleteTask(idParam) {
+        setToDoList(toDoList => {
+            return toDoList.filter((todo) => (todo.id !== idParam))
+        })
+    }
 
-function toggleCompleted (idParam) {
+    function toggleCompleted(idParam) {
         const clonedToDoList = [...toDoList]
-    setToDoList(clonedToDoList.map ((todo) =>
-        todo.id === idParam ? {...todo, status: !todo.status} : todo)
-)}
+        setToDoList(clonedToDoList.map((todo) =>
+            todo.id === idParam ? {...todo, status: !todo.status} : todo)
+        )
+    }
 
 
-
-    console.log(toDoList)
-        return (
-            <> <header><h1>To Do App</h1></header>
-                <main>
+    return (
+        <>
+            <header><h1>To Do App</h1></header>
+            <main>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="addtask">Title
                         <input
@@ -113,8 +118,12 @@ function toggleCompleted (idParam) {
                     <button type="submit">Add</button>
                 </form>
 
-                <button type="button"
-                        onClick={() => toggleSortedTasks(sortedTasks !== true)}> {sortedTasks === true ? "sorted on low priority first" : "sorted on high priority first"}</button>
+                <Buttons
+                    toggleTasks= {() =>toggleSortedTasks(sortedTasks !== true)}
+                    buttontext = "Sort on priority"
+                    image = {arrows}
+                />
+
 
 
                 <section className="toDoList">
@@ -122,38 +131,35 @@ function toggleCompleted (idParam) {
                         {toDoList.map((todo) => {
                             if (sortedTasks !== true) {
                                 toDoList.sort((a, b) => a.priority - b.priority)
-                                    return <li key={todo.id}>
-                                    <input type="checkbox" onClick={() => {toggleCompleted(todo.id)}} />
-                                        <span className={todo.status ? 'checked': 'notchecked'}>{todo.title}</span>
-                                    <span>{todo.priority}</span>
-                                    <button type="button" onClick={() => {deleteTask(todo.id)}}><img src={trash} alt='trashicon' /></button>
-                                </li>
+                                return <TodoItem
+                                    key={todo.id}
+                                    todo={todo}
+                                    toggleCompleted={toggleCompleted}
+                                    deleteTask={deleteTask}
+                                />
+                            } else if (sortedTasks !== false) {
+                                toDoList.sort((a, b) => b.priority - a.priority)
+                                return <TodoItem
+                                    key={todo.id}
+                                    todo={todo}
+                                    toggleCompleted={toggleCompleted}
+                                    deleteTask={deleteTask}
+                                />
+                            } else {
+                                return <TodoItem
+                                    key={todo.id}
+                                    todo={todo}
+                                    toggleCompleted={toggleCompleted}
+                                    deleteTask={deleteTask}
+                                />
                             }
-                           else if (sortedTasks !== false) {
-                               toDoList.sort((a, b) => b.priority - a.priority)
-                               return <li key={todo.id}>
-                                   <input type="checkbox" onClick={() => {toggleCompleted(todo.id)}} />
-                                   <span className={todo.status ? 'checked': 'notchecked'}>{todo.title}</span>
-                                   <span>{todo.priority}</span>
-                                   <button type="button" onClick={() => {deleteTask(todo.id)}}><img src={trash} alt='trashicon' /></button>
-                               </li>
-                        }
-                           else {
-                           return <li key={todo.id}>
-                                    <input type="checkbox" onClick={() => {toggleCompleted(todo.id)}}/>
-                                    <span className={todo.status ? 'checked': 'notchecked'}>{todo.title}</span>
-                                   <span>{todo.priority}</span>
-                                    <button type="button" onClick={() => {deleteTask(todo.id)}}><img src={trash} alt='trashicon' /></button>
-                                </li>
-                            }}
-                        )}
-
+                        })}
                     </ul>
                 </section>
-                </main>
+            </main>
 
-            </>
-        )
-    }
+        </>
+    )
+}
 
-    export default App
+export default App

@@ -92,17 +92,17 @@ function App() {
         }
     }
 
-    // function sortOnCompleted (statusTask) {
-    //     if (statusTask !== true) {
-    //         return toDoList.sort((a, b) => a.status - b.status)
-    //     }
-    // }
-    //
-    // function sortOnNotCompleted (statusTask) {
-    //     if (statusTask !== false) {
-    //         return toDoList.sort((a, b) => b.status - a.status)
-    //     }
-    // }
+    function sortOnCompleted (statusTask) {
+        if (statusTask !== true) {
+            return toDoList.sort((a, b) => a.status - b.status)
+        }
+    }
+
+    function sortOnNotCompleted (statusTask) {
+        if (statusTask !== false) {
+            return toDoList.sort((a, b) => b.status - a.status)
+        }
+    }
 
     return (
         <>
@@ -186,33 +186,31 @@ function App() {
                                 deleteTask={deleteTask}
                             />
                             }
+                            // sort on completed
 
+                            // if (sortOnCompleted(statusTask)){
+                            //     return <TodoItem
+                            //         key={todo.id}
+                            //         todo={todo}
+                            //         toggleCompleted={toggleCompleted}
+                            //         deleteTask={deleteTask}
+                            //     />}
+                            // else if (sortOnNotCompleted(statusTask)){
+                            //     return <TodoItem
+                            //         key={todo.id}
+                            //         todo={todo}
+                            //         toggleCompleted={toggleCompleted}
+                            //         deleteTask={deleteTask}
+                            //     />}
                         })}
 
-
-
-                            {/*// //  //sort on completed*/}
-                            {/*if (sortOnCompleted(statusTask)){*/}
-                            {/* return <TodoItem*/}
-                            {/*     key={todo.id}*/}
-                            {/*     todo={todo}*/}
-                            {/*     toggleCompleted={toggleCompleted}*/}
-                            {/*     deleteTask={deleteTask}*/}
-                            {/* />}*/}
-                            {/* else if (sortOnNotCompleted(statusTask)){*/}
-                            {/* return <TodoItem*/}
-                            {/*     key={todo.id}*/}
-                            {/*     todo={todo}*/}
-                            {/*     toggleCompleted={toggleCompleted}*/}
-                            {/*     deleteTask={deleteTask}*/}
-                            {/* />}*/}
 
 
 
                     </ul>
                 </section>
             </main>
-
+<footer>Copyright Kim Raven</footer>
         </>
     )
 }

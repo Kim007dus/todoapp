@@ -20,6 +20,7 @@
     --color-bg-header: #0284c7;
     --color-bg-button: #075985;
     --color-text-button: #bae6fd;
+    --footer-height: 2rem;
 }
 
 /*------- font styles ----*/
@@ -28,7 +29,10 @@ body {
     font-family: 'Raleway', sans-serif;
     color: var(--color-bg-text);
     background-color: var(--color-bg-body);
+
 }
+
+
 
 a {
     text-transform: none;
@@ -41,10 +45,10 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-    font-size: 2.5rem;
+    font-size: 2.1rem;
     font-weight: 700;
     text-align: center;
-    margin: 2rem 0;
+    margin: 1rem 0;
 }
 
 h2 {
@@ -62,7 +66,7 @@ header {
     align-items: center;
     justify-content: center;
     background-color: var(--color-bg-header);
-    padding: 2rem 0;
+    padding: 0.5rem 0;
 }
 
 /*----------------- main -----------------*/
@@ -72,10 +76,13 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 0;
     background-color: var(--color-bg-section);
-    padding: 2rem 0;
+    padding: 0;
     max-width: 85%;
     margin-inline: auto;
+    height: calc(100vh - var(--footer-height));
+
 }
 
 .button {
@@ -117,7 +124,7 @@ form {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    margin: 2rem 0;
+    margin: 0 0 2rem 0;
     gap: 20px;
 }
 
@@ -221,5 +228,66 @@ span {
 .default {
     background-image: none;
 
+}
+
+
+/*----------------- footer -----------------*/
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-bg-header);
+    padding: 1rem 0;
+    color: var(--color-text-header);
+    font-size: 0.5rem;
+    height: var(--footer-height);
+
+}
+
+/*-----------media queries ---------------*/
+
+@media (max-width: 767px) {
+    main {
+        max-width: 100%;
+
+    }
+
+    h1, h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin: 1rem 0;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        margin: 0;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-align: left;
+        margin: 10px;
+        gap: 10px;
+    }
+
+    .toDoList {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: 0.5rem 0;
+        position: relative;
+        max-width: 95%;
+    }
 }
 

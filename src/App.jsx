@@ -1,12 +1,9 @@
 import {useState} from "react";
 import {v4 as uuidv4} from "uuid";
-import trash from './assets/trash-duotone.svg';
 import TodoItem from "./components/showtodoitem.jsx";
 import Buttons from "./components/buttons.jsx";
 import arrows from './assets/arrows-down-up-duotone.svg'
-import high from './assets/flag-duotone-red.svg'
-import medium from './assets/flag-duotone-orange.svg'
-import low from './assets/flag-duotone-green.svg'
+
 
 
 
@@ -35,7 +32,7 @@ function App() {
     const [formState, setFormState] = useState({
         title: "",
         status: false,
-        priority: "",
+        priority: "1",
         description: "",
         id: 0
     })
@@ -49,23 +46,26 @@ function App() {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault(
+        e.preventDefault()
+            if (formState.title === "") {
+                return alert("Please fill in the title")
+            }
+            else {
                 setToDoList([...toDoList, {
                     title: formState.title,
                     status: formState.status,
                     priority: formState.priority,
                     description: formState.description,
                     id: uuidv4()
-                }]))
+                }])}
+            setFormState({title: "", status: false, priority: "1", description: ""})
 
     }
 
 
+
     const [statusTask, toggleStatusTask] = useState(true)
-    // console.log(statusTask)
-
     const [sortedTasks, toggleSortedTasks] = useState(true)
-
 
     function deleteTask(idParam) {
         setToDoList(toDoList => {
@@ -80,6 +80,29 @@ function App() {
         )
     }
 
+    function sortOnHighPriority(sortedTasks) {
+        if (sortedTasks !== true) {
+            return toDoList.sort((a, b) => a.priority - b.priority)
+        }}
+
+
+    function sortOnLowPriority (sortedTasks) {
+        if (sortedTasks !== false) {
+            return toDoList.sort((a, b) => b.priority - a.priority)
+        }
+    }
+
+    // function sortOnCompleted (statusTask) {
+    //     if (statusTask !== true) {
+    //         return toDoList.sort((a, b) => a.status - b.status)
+    //     }
+    // }
+    //
+    // function sortOnNotCompleted (statusTask) {
+    //     if (statusTask !== false) {
+    //         return toDoList.sort((a, b) => b.status - a.status)
+    //     }
+    // }
 
     return (
         <>
@@ -123,43 +146,69 @@ function App() {
                     </label>
                     <button className="button" type="submit">Add</button>
                 </form>
-
+                <section className="buttonsection">
                 <Buttons
                     toggleTasks= {() =>toggleSortedTasks(sortedTasks !== true)}
                     buttontext = "Sort on priority"
                     image = {arrows}
                 />
-
+                {/*<Buttons*/}
+                {/*    toggleTasks= {() =>toggleStatusTask(statusTask !== true)}*/}
+                {/*    buttontext = "Sort on completed"*/}
+                {/*    image = {arrows}*/}
+                {/*/>*/}
+                </section>
 
                 <h2>My to do's</h2>
                 <section className="toDoList">
                     <ul>
                         {toDoList.map((todo) => {
-                            if (sortedTasks !== true) {
-                                toDoList.sort((a, b) => a.priority - b.priority)
-                                return <TodoItem
-                                    key={todo.id}
-                                    todo={todo}
-                                    toggleCompleted={toggleCompleted}
-                                    deleteTask={deleteTask}
-                                />
-                            } else if (sortedTasks !== false) {
-                                toDoList.sort((a, b) => b.priority - a.priority)
-                                return <TodoItem
-                                    key={todo.id}
-                                    todo={todo}
-                                    toggleCompleted={toggleCompleted}
-                                    deleteTask={deleteTask}
-                                />
-                            } else {
-                                return <TodoItem
-                                    key={todo.id}
-                                    todo={todo}
-                                    toggleCompleted={toggleCompleted}
-                                    deleteTask={deleteTask}
-                                />
+                            // sort on priority
+                            if (sortOnHighPriority(sortedTasks)){
+                                    return <TodoItem
+                                        key={todo.id}
+                                        todo={todo}
+                                        toggleCompleted={toggleCompleted}
+                                        deleteTask={deleteTask}
+                                    />}
+                            else if (sortOnLowPriority(sortedTasks)){
+                                    return <TodoItem
+                                        key={todo.id}
+                                        todo={todo}
+                                        toggleCompleted={toggleCompleted}
+                                        deleteTask={deleteTask}
+                                    />}
+                        else {
+                            return <TodoItem
+                                key={todo.id}
+                                todo={todo}
+                                toggleCompleted={toggleCompleted}
+                                deleteTask={deleteTask}
+                            />
                             }
+
                         })}
+
+
+
+                            {/*// //  //sort on completed*/}
+                            {/*if (sortOnCompleted(statusTask)){*/}
+                            {/* return <TodoItem*/}
+                            {/*     key={todo.id}*/}
+                            {/*     todo={todo}*/}
+                            {/*     toggleCompleted={toggleCompleted}*/}
+                            {/*     deleteTask={deleteTask}*/}
+                            {/* />}*/}
+                            {/* else if (sortOnNotCompleted(statusTask)){*/}
+                            {/* return <TodoItem*/}
+                            {/*     key={todo.id}*/}
+                            {/*     todo={todo}*/}
+                            {/*     toggleCompleted={toggleCompleted}*/}
+                            {/*     deleteTask={deleteTask}*/}
+                            {/* />}*/}
+
+
+
                     </ul>
                 </section>
             </main>

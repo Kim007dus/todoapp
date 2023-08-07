@@ -32,12 +32,18 @@ body {
 
 }
 
-
-
-a {
-    text-transform: none;
+a, a:visited, nav a, nav a:visited {
+    text-decoration: none;
+    color: var(--color-text-header);
 }
 
+.default-link {
+    border-bottom: 1px solid transparent;
+}
+
+.active-link {
+    border-bottom: 1px solid var(--color-text-header);
+}
 
 h1, h2, h3, h4, h5 {
     color: var(--color-bg-title);
@@ -51,6 +57,8 @@ h1 {
     margin: 1rem 0;
 }
 
+
+
 h2 {
     font-size: 2rem;
     font-weight: 700;
@@ -61,13 +69,33 @@ h2 {
 /*----------------- header -----------------*/
 
 header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     background-color: var(--color-bg-header);
-    padding: 0.5rem 0;
+
 }
+
+.nav-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-inline: 15%;
+
+}
+
+.nav-container ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-container li {
+    border-color: var(--color-bg-header);
+}
+
 
 /*----------------- main -----------------*/
 
@@ -261,6 +289,10 @@ footer {
         margin: 1rem 0;
     }
 
+    .nav-container {
+        justify-content: center;
+    }
+
     form {
         display: flex;
         flex-direction: column;
@@ -289,5 +321,7 @@ footer {
         position: relative;
         max-width: 95%;
     }
+
+
 }
 

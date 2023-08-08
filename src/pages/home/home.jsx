@@ -4,6 +4,7 @@ import Buttons from "../../components/buttons.jsx";
 import TodoItem from "../../components/showtodoitem.jsx";
 import arrows from '../../assets/arrows-down-up-duotone.svg'
 import Navigation from "../../components/navigation.jsx";
+import Footer from "../../components/footer.jsx";
 
 
 
@@ -51,7 +52,7 @@ function App() {
     const handleSubmit = (e) => {
         e.preventDefault()
             if (formState.title === "") {
-                return alert("Please fill in the title")
+                return alert("❌ Please add the title of you to do...")
             }
             else {
                 setToDoList([...toDoList, {
@@ -61,7 +62,7 @@ function App() {
                     description: formState.description,
                     id: uuidv4()
                 }])}
-            setFormState({title: "", status: false, priority: "1", description: ""})
+            setFormState({title: "", status: false, priority: "1", description: "", id: 0})
 
     }
 
@@ -109,7 +110,7 @@ function App() {
 
     return (
         <>
-            <header><Navigation /></header>
+           <Navigation />
             <main>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="addtask">Title
@@ -213,7 +214,7 @@ function App() {
                     </ul>
                 </section>
             </main>
-<footer>Copyright Kim Raven</footer>
+            <Footer/>
         </>
     )
 }

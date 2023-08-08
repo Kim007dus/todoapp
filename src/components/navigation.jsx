@@ -1,20 +1,24 @@
 import {NavLink} from "react-router-dom";
-
+import logo from '../assets/list-checks-duotone.svg'
 
 function Navigation() {
 
     return (
-        <nav>
+        <header><nav>
             <div className="nav-container">
-                <h1>To Do App</h1>
+                <ul>
+                   <li><img src={logo} alt="logo" className="logo"/></li>
+                <li><h1>To Do App</h1></li>
+            </ul>
 
                 <ul>
                     <li><NavLink to="/" className={ ({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Home</NavLink></li>
-                    <li><NavLink to="/edittodo" className={ ({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Edit to do</NavLink></li>
-
+                    <li><NavLink to="/details:id" className={ ({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Details</NavLink></li>
+                    <li><NavLink to="/aboutme" className={ ({isActive}) => isActive === true ? 'active-link' : 'default-link'}>About me</NavLink></li>
                 </ul>
             </div>
         </nav>
+        </header>
     );
 }
 

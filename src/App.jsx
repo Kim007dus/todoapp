@@ -2,7 +2,8 @@ import {useState} from "react";
 import {v4 as uuidv4} from "uuid";
 import {Routes, Route} from 'react-router-dom';
 import Home from "./pages/home/home.jsx";
-import Edittodo from "./pages/edit/edittodo.jsx";
+import Details from "./pages/edit/details.jsx";
+import Aboutme from "./pages/about/aboutme.jsx";
 
 
 function App() {
@@ -10,7 +11,8 @@ function App() {
         <>
             <Routes>
                 <Route path="/" element={<Home/>}/>
-                <Route path="/edittodo" element={<Edittodo/>}/>
+                <Route path="/details:id" element={<Details/>}/>
+                <Route path="/aboutme" element={<Aboutme/>}/>
             </Routes>
         </>
     )

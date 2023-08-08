@@ -73,6 +73,11 @@ header {
 
 }
 
+.logo {
+    width: 50px;
+    aspect-ratio: 1/1;
+}
+
 .nav-container {
     display: flex;
     flex-direction: row;
@@ -89,7 +94,7 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
 }
 
 .nav-container li {

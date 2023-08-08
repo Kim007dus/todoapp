@@ -1,0 +1,32 @@
+
+.aboutme img {
+    width: 100%;
+    max-width: 200px;
+    aspect-ratio: 1/1;
+    border-radius: 20px;
+    margin: 0;
+    padding: 0.5rem;
+    grid-column: 1 / 2;
+}
+
+.aboutme {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-gap: 5px;
+    align-items: center;
+    justify-items: center;
+    max-width: 85%;
+
+}
+
+.aboutme-text {
+    grid-column: 2/3;
+    text-align: left;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+.aboutme-text p {
+    padding: 0.5rem;
+    margin: 0.5rem;
+}

@@ -132,6 +132,11 @@ main {
 
 }
 
+.button:hover {
+    background-color: var(--color-bg-title);
+    color: var(--color-text-button);
+}
+
 .button img {
     width: 25px;
     aspect-ratio: 1/1;
@@ -146,10 +151,7 @@ main {
     gap: 5px;
 }
 
-.button:hover {
-    background-color: var(--color-bg-title);
-    color: var(--color-text-button);
-}
+
 
 form {
     display: flex;
@@ -159,6 +161,10 @@ form {
     justify-content: center;
     margin: 0 0 2rem 0;
     gap: 20px;
+}
+
+form .button {
+    margin: 0 0 0.1rem 1rem;
 }
 
 label {
@@ -171,6 +177,12 @@ label {
     gap: 10px;
 }
 
+.buttonsection {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
 .toDoList {
     display: flex;
@@ -296,6 +308,7 @@ footer {
 
     .nav-container {
         justify-content: center;
+        margin-inline: 0;
     }
 
     form {
@@ -307,6 +320,11 @@ footer {
         margin: 0;
     }
 
+    form .button {
+        margin: 0.5rem 0 0 0;
+
+    }
+
     label {
         display: flex;
         flex-direction: column;
@@ -315,6 +333,12 @@ footer {
         text-align: left;
         margin: 10px;
         gap: 10px;
+    }
+
+
+    .buttonsection {
+        margin-top: 10px;
+        justify-content: center;
     }
 
     .toDoList {

@@ -20,7 +20,7 @@
     --color-bg-header: #0284c7;
     --color-bg-button: #075985;
     --color-text-button: #bae6fd;
-    --footer-height: 2rem;
+
 }
 
 /*------- font styles ----*/
@@ -29,6 +29,8 @@ body {
     font-family: 'Raleway', sans-serif;
     color: var(--color-bg-text);
     background-color: var(--color-bg-body);
+    width: 100vw;
+    height: 100vh;
 
 }
 
@@ -58,13 +60,25 @@ h1 {
 }
 
 
-
 h2 {
     font-size: 2rem;
     font-weight: 700;
     text-align: center;
     margin: 2rem 0;
 }
+
+.container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto 1fr auto;
+    gap: 0;
+   grid-template-areas:
+      "header"
+      "main"
+      "footer";
+}
+
 
 /*----------------- header -----------------*/
 
@@ -112,9 +126,10 @@ main {
     gap: 0;
     background-color: var(--color-bg-section);
     padding: 0;
-    max-width: 85%;
-    margin-inline: auto;
-    height: calc(100vh - var(--footer-height));
+    max-width: 90%;
+    margin: 0 10%;
+
+
 
 }
 
@@ -150,7 +165,6 @@ main {
     justify-content: center;
     gap: 5px;
 }
-
 
 
 form {
@@ -191,6 +205,9 @@ label {
     justify-content: center;
     margin: 0.5rem 0;
     position: relative;
+    max-width: 95%;
+
+
 }
 
 .toDoList button {
@@ -287,7 +304,8 @@ footer {
     padding: 1rem 0;
     color: var(--color-text-header);
     font-size: 0.5rem;
-    height: var(--footer-height);
+    /*height: var(--footer-height);*/
+
 
 }
 
@@ -353,4 +371,5 @@ footer {
 
 
 }
+
 

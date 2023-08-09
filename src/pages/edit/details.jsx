@@ -2,23 +2,42 @@ import React from 'react';
 import Navigation from "../../components/navigation.jsx";
 import {useParams} from 'react-router-dom';
 import Footer from "../../components/footer.jsx";
-
-
-// Een todo-detail-pagina waarop uiteindelijk alle detailinformatie van één todo wordt weergegeven. Dit moet een dynamic route zijn; Houdt er rekening mee dat we - behalve de unieke identifier - nog geen detail-informatie over een todo kunnen weergeven op de detailpagina, hier hebben we een backend voor nodig. Wel richt je de detailpagina alvast in met dummy-data en zorg je er met state voor dat de gebruiker kan togglen tussen 'weergeven' en 'bewerken', waarin er invoervelden verschijnen.
-
+import Buttons from "../../components/buttons.jsx";
+import arrows from "../../assets/arrows-down-up-duotone.svg";
+import './edit.css'
 
 
 function Details() {
     const {id} = useParams();
 
     return (
-        <>
+        <div className="container">
             <Navigation/>
             <main>
-                <div>Het productnummer is {id}</div>
+                <h2>I need to do this</h2>
+                <section className="buttonsection">
+                    <Buttons
+                        toggleTasks={() => console.log("Weergeven van de to do")}
+                        buttontext="Show me al the details"
+                        image={arrows}
+                    />
+                    <Buttons
+                        toggleTasks={() => console.log("edit")}
+                        buttontext="Edit modus"
+                        image={arrows}
+                    />
+                </section>
+                <section className="details">
+                    <h2>ID of the to do</h2>
+                    <input type="checkbox" />
+                    <span> Title: Learn html </span>
+                    <span> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum, rerum, sint. Animi enim harum perferendis saepe sint sit unde, vel?</span>
+                    </section>
+
+
             </main>
             <Footer/>
-        </>
+        </div>
     );
 }
 

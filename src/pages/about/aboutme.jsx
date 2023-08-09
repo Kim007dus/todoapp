@@ -1,11 +1,11 @@
 import Navigation from "../../components/navigation.jsx";
 import Footer from "../../components/footer.jsx";
 import kim from "../../assets/aboutme.jpg";
-import aboutme from "./aboutme.css"
+import "./aboutme.css"
 
 function Aboutme() {
     return (
-        <>
+        <div className="container">
             <Navigation/>
             <main>
                 <h2>About me</h2>
@@ -22,7 +22,7 @@ function Aboutme() {
                     </article>
             </main>
             <Footer/>
-        </>
+        </div>
 );
 }
 

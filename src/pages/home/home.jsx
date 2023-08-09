@@ -9,6 +9,7 @@ import sortTasksCompleted from "../../helpers/sortTasksCompleted.js";
 import sortTasksPriority from "../../helpers/sortTasksPriority.js";
 import generateNewSortTypePriority from "../../helpers/generateNewSortTypePriority.js";
 import generateNewSortTypeCompleted from "../../helpers/generateNewSortTypeCompleted.js";
+import Inputfield from "../../components/inputfield.jsx";
 
 function App() {
     const [toDoList, setToDoList] = useState([
@@ -79,14 +80,14 @@ function App() {
         )
     }
 
-    function sortPriority () {
+    function sortPriority() {
         const newSortType = generateNewSortTypePriority(activeSortType);
         const sortedTodos = sortTasksPriority(newSortType, toDoList);
         setToDoList(sortedTodos);
         setActiveSortType(newSortType);
     }
 
-    function sortCompleted () {
+    function sortCompleted() {
         const newSortType = generateNewSortTypeCompleted(activeSortType);
         const sortedTodos = sortTasksCompleted(newSortType, toDoList);
         setToDoList(sortedTodos);
@@ -95,35 +96,25 @@ function App() {
     }
 
     return (
-        <>
+        <div className="container">
             <Navigation/>
             <main>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="addtask">Title
-                        <input
-                            type="text"
-                            maxLength={20}
-                            value={formState.title}
-                            id="addtask"
-                            name="title"
-                            placeholder="Add the title here"
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <label htmlFor="adddescription">Description
-                        <input
-                            type="text"
-                            maxLength={30}
-                            value={formState.description}
-                            id="adddescription"
-                            name="description"
-                            placeholder="Add the description here"
-                            onChange={handleChange}
-                        />
-                    </label>
-
-                    <label htmlFor="selectpriority">
-                        Priority
+                  <Inputfield
+                        title= "title"
+                        titleid= "todotitle"
+                        text= "Add a title here"
+                        handle= {handleChange}
+                        value= {formState.title}
+                    />
+                    <Inputfield
+                        title= "description"
+                        titleid= "tododescription"
+                        text= "Add a description here"
+                        handle= {handleChange}
+                        value= {formState.description}
+                    />
+                    <label htmlFor="selectpriority">Priority
                         <select
                             id="selectpriority"
                             name="priority"
@@ -136,6 +127,7 @@ function App() {
                     </label>
                     <button className="button" type="submit">Add</button>
                 </form>
+
                 <section className="buttonsection">
                     <Buttons
                         toggleTasks={() => sortPriority()}
@@ -147,9 +139,9 @@ function App() {
                         buttontext="Sort on completed"
                         image={arrows}
                     />
-                    </section>
+                </section>
 
-                <h2>My to do's</h2>
+                <h2>All the things to do</h2>
                 <section className="toDoList">
                     <ul>
                         {toDoList.map((todo) => {
@@ -166,7 +158,7 @@ function App() {
                 </section>
             </main>
             <Footer/>
-        </>
+        </div>
     )
 }
 

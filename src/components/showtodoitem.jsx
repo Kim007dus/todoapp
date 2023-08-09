@@ -1,7 +1,7 @@
 import trash from "../assets/trash-duotone.svg";
 
 
-const TodoItem = ({ todo, toggleCompleted, deleteTask, image }) => {
+const TodoItem = ({ todo, toggleCompleted, deleteTask}) => {
     return (
         <li key={todo.id}>
             <input type="checkbox" onClick={() => toggleCompleted(todo.id)} />

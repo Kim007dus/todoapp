@@ -10,37 +10,35 @@ import sortTasksPriority from "../../helpers/sortTasksPriority.js";
 import generateNewSortTypePriority from "../../helpers/generateNewSortTypePriority.js";
 import generateNewSortTypeCompleted from "../../helpers/generateNewSortTypeCompleted.js";
 import Inputfield from "../../components/inputfield.jsx";
+import {useEffect} from "react";
+import axios from "axios";
+import {useParams} from "react-router-dom";
 
 function App() {
-    const [toDoList, setToDoList] = useState([
-        {
+    const {id} = useParams();
+    const urlall = 'http://localhost:3000/todos/'
+    const urlid = 'http://localhost:3000/todos/:id'
+    const [data, setTodoList] = useState([])
+    const [activeSortType, setActiveSortType] = useState('');
 
-            title: "Learn html",
-            status: false,
-            priority: "3",
-            description: "I need to learn html for real this time",
-            id: uuidv4()
+    const fetchInfo = () => {
+        return axios.get(urlall).then((res) => setTodoList(res.data));
+    };
 
-        },
-        {
+    useEffect(() => {
+        fetchInfo();
+    }, []);
 
-            title: "Learn Javascript",
-            status: false,
-            priority: "1",
-            description: "This is gonna be hard, but need to.",
-            id: uuidv4()
-
-        }
-    ])
 
     const [formState, setFormState] = useState({
         title: "",
-        status: false,
+        completed: false,
         priority: "1",
         description: "",
-        id: 0
+        id: 0,
+        created: new Date()
     })
-    const [activeSortType, setActiveSortType] = useState('');
+
 
 
     function handleChange(e) {
@@ -51,46 +49,52 @@ function App() {
         });
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = () => {
+        // e.preventDefault()
         if (formState.title === "") {
             return alert("❌ Please add the title of you to do...")
         } else {
-            setToDoList([...toDoList, {
+            axios.post((urlall),  {
                 title: formState.title,
-                status: formState.status,
+                completed: formState.status,
                 priority: formState.priority,
                 description: formState.description,
-                id: uuidv4()
-            }])
+                id: uuidv4(),
+                created: new Date()
+
+            })
         }
-        setFormState({title: "", status: false, priority: "1", description: "", id: 0})
+        setFormState({title: "", completed: false, priority: "1", description: "", id: 0})
 
     }
 
     function deleteTask(idParam) {
-        setToDoList(toDoList => {
-            return toDoList.filter((todo) => (todo.id !== idParam))
-        })
-    }
+         data.find((todo)=> todo.id === idParam)
+        axios.delete( urlall + idParam).then(()=> {
+               setTodoList(data)}
+        )}
+
+
+console.log(data)
+
+
 
     function toggleCompleted(idParam) {
-        setToDoList(toDoList.map((todo) =>
-            todo.id === idParam ? {...todo, status: !todo.status} : todo)
-        )
-    }
+       setTodoList(data.map((todo) =>
+            todo.id === idParam ? {...todo, completed: !todo.completed} : todo)
+       )}
 
     function sortPriority() {
         const newSortType = generateNewSortTypePriority(activeSortType);
-        const sortedTodos = sortTasksPriority(newSortType, toDoList);
-        setToDoList(sortedTodos);
+        const sortedTodos = sortTasksPriority(newSortType, data);
+        setTodoList(sortedTodos);
         setActiveSortType(newSortType);
     }
 
     function sortCompleted() {
         const newSortType = generateNewSortTypeCompleted(activeSortType);
-        const sortedTodos = sortTasksCompleted(newSortType, toDoList);
-        setToDoList(sortedTodos);
+        const sortedTodos = sortTasksCompleted(newSortType, data);
+        setTodoList(sortedTodos);
         setActiveSortType(newSortType);
 
     }
@@ -144,7 +148,7 @@ function App() {
                 <h2>All the things to do</h2>
                 <section className="toDoList">
                     <ul>
-                        {toDoList.map((todo) => {
+                        {data.map((todo, index) => {
                             return <TodoItem
                                 key={todo.id}
                                 todo={todo}

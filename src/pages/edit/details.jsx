@@ -1,39 +1,58 @@
-import React from 'react';
 import Navigation from "../../components/navigation.jsx";
 import {useParams} from 'react-router-dom';
 import Footer from "../../components/footer.jsx";
 import Buttons from "../../components/buttons.jsx";
-import arrows from "../../assets/arrows-down-up-duotone.svg";
+import edit from "../../assets/pencil-simple-duotone.svg"
 import './edit.css'
+import {useEffect, useState} from "react";
+import axios from "axios";
+
 
 
 function Details() {
     const {id} = useParams();
+    const url = 'http://localhost:3000/todos/'
+    const [data, setTodoList] = useState([])
+    const fetchInfo = () => {
+        return axios.get(url + id).then((res) => setTodoList(res.data));
+    };
+
+    useEffect(() => {
+        fetchInfo();
+    }, []);
+
+   function showPriority() {
+       if (data.priority === "1") {
+           return "Oopsie, do this today"
+       }
+       if (data.priority === "2") {
+           return "This needs to be done this week"
+       }
+         if (data.priority === "3") {
+              return "No worries, this month will be okay"
+         }
+    }
+
 
     return (
         <div className="container">
             <Navigation/>
             <main>
-                <h2>I need to do this</h2>
                 <section className="buttonsection">
                     <Buttons
-                        toggleTasks={() => console.log("Weergeven van de to do")}
-                        buttontext="Show me al the details"
-                        image={arrows}
-                    />
-                    <Buttons
                         toggleTasks={() => console.log("edit")}
-                        buttontext="Edit modus"
-                        image={arrows}
+                        buttontext="Edit"
+                        image={edit}
                     />
                 </section>
-                <section className="details">
-                    <h2>ID of the to do</h2>
-                    <input type="checkbox" />
-                    <span> Title: Learn html </span>
-                    <span> Description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum, rerum, sint. Animi enim harum perferendis saepe sint sit unde, vel?</span>
-                    </section>
+                <h2>Details</h2>
 
+                <section className='details' >
+                    <h3>Todo: {data.title}</h3>
+                        <p>Todo Id: {data.id}</p>
+                        <p>Description: {data.description}</p>
+                        <p className="prio">Priority: {showPriority()}</p>
+                </section>
 
             </main>
             <Footer/>

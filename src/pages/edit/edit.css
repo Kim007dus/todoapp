@@ -1,11 +1,19 @@
 
-
 .details {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-
+    align-items: left;
+    gap: 15px;
+    padding: 20px;
 }
+
+.prio {
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+
+
 
 

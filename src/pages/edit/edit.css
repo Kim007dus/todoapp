@@ -9,9 +9,11 @@
         "homebutton homebutton";
 }
 
-.breadcrumbs {
+.breadcrumb {
     grid-row: 1;
     grid-column: 1;
+    text-align: left;
+    margin-left: 35px;
 }
 
 .detail {
@@ -27,15 +29,18 @@
     grid-column: 1;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: flex-start;
     gap: 30px;
-    padding: 20px;
+    padding: 10px;
     margin-left: 45px;
+    margin-top: 15px;
+    border-radius: 15px;
+    border: 1px solid var(--color-bg-text);
 }
 
 .prio {
-    font-size: 1.1rem;
-    font-weight: 500;
+    text-decoration: underline;
 }
 
 .form-edit-mode {
@@ -46,8 +51,10 @@
     justify-content: center;
     align-items: center;
     gap: 35px;
-    margin: 0;
+    margin-top: 15px;
     padding: 10px;
+
+
 }
 
 .form-read-mode label, .form-read-mode input, .form-read-mode textarea, .form-read-mode select, .form-read-mode .form {
@@ -84,6 +91,52 @@
     border: transparent;
     cursor: pointer;
 }
+
+
+/*-----------media queries ---------------*/
+
+@media (max-width: 767px) {
+    main {
+        max-width: 100%;
+
+    }
+
+    h1, h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin: 1rem 0;
+    }
+
+    .nav-container {
+        justify-content: center;
+        margin-inline: 0;
+    }
+
+    .form-edit-mode input, .form-edit-mode .form {
+        max-width: 75%;
+
+    }
+
+    .form-edit-mode .form {
+        padding-inline: 10px;
+    }
+
+    .detail {
+        max-width: 75%;
+    }
+    .breadcrumb {
+        font-size: 0.7rem;
+        margin-left: -4px;
+    }
+}
+
+
+
+
+
+
+
 
 
 

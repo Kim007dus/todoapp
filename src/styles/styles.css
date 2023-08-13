@@ -34,9 +34,14 @@ body {
 
 }
 
-a, a:visited, nav a, nav a:visited {
+nav a, nav a:visited {
     text-decoration: none;
     color: var(--color-text-header);
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: var(--color-bg-title);
 }
 
 .default-link {
@@ -46,6 +51,9 @@ a, a:visited, nav a, nav a:visited {
 .active-link {
     border-bottom: 1px solid var(--color-text-header);
 }
+
+
+
 
 h1, h2, h3, h4, h5 {
     color: var(--color-bg-title);
@@ -228,7 +236,7 @@ li {
     font-size: 1rem;
     font-weight: 500;
     margin: 1rem 0;
-    gap: 25px;
+    gap: 50px;
     border: 1px solid var(--color-bg-title);
     border-radius: 5px;
     padding: 0.5rem 1rem;

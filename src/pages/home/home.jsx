@@ -16,19 +16,10 @@ import {useParams} from "react-router-dom";
 
 function App() {
     const {id} = useParams();
-    const urlall = 'http://localhost:3000/todos/'
-    const urlid = 'http://localhost:3000/todos/:id'
-    const [data, setTodoList] = useState([])
+    const uriall = 'http://localhost:3000/todos/'
+    const [toDoList, setTodoList] = useState([])
     const [activeSortType, setActiveSortType] = useState('');
-
-    const fetchInfo = () => {
-        return axios.get(urlall).then((res) => setTodoList(res.data));
-    };
-
-    useEffect(() => {
-        fetchInfo();
-    }, []);
-
+    const [error, setError] = useState('');
 
     const [formState, setFormState] = useState({
         title: "",
@@ -39,7 +30,74 @@ function App() {
         created: new Date()
     })
 
+    async function fetchInfo() {
+        setError('');
+        try {
+            const result = await axios.get(uriall).then((res) => setTodoList(res.data));
+        } catch (error) {
+            console.error(error)
+            setError('Oops, something went wrong. Please try again later.')
+        }
 
+    }
+
+    useEffect(() => {
+        fetchInfo();
+    }, []);
+
+    async function deleteInfo(idParam) {
+        setError('');
+        try {
+            await axios.delete(uriall + idParam);
+
+        } catch (error) {
+            console.error(error)
+            setError('Oops, something went wrong. Please try again later.')
+        }
+
+    }
+
+    async function postToDo() {
+        setError('');
+        try {
+            const result = await axios.post((uriall), {
+                title: formState.title,
+                completed: false,
+                priority: formState.priority,
+                description: formState.description,
+                id: uuidv4(),
+                created: new Date()
+            });
+
+        } catch (error) {
+            console.error(error);
+            setError('Oops, something went wrong. Please try again later.')
+        }
+    }
+
+    async function editCompleted(idParam) {
+        setError('');
+        let theone = toDoList.find((todo) => todo.id === idParam)
+        theone.completed = !theone.completed
+
+        try {
+            await axios.put((uriall + idParam), {
+                    title: theone.title,
+                    completed: theone.completed,
+                    priority: theone.priority,
+                    description: theone.description,
+                    created: new Date()
+                }
+            )
+            setTodoList(toDoList.map((todo) =>
+                todo.id === idParam ? {...todo, completed: !todo.completed} : todo)
+            )
+
+        } catch (error) {
+            console.error(error);
+            setError('Oops, something went wrong. Please try again later.')
+        }
+    }
 
     function handleChange(e) {
         const {name, value} = e.target;
@@ -50,73 +108,60 @@ function App() {
     }
 
     const handleSubmit = () => {
-        // e.preventDefault()
+        e.preventDefault()
         if (formState.title === "") {
             return alert("❌ Please add the title of you to do...")
         } else {
-            axios.post((urlall),  {
-                title: formState.title,
-                completed: formState.status,
-                priority: formState.priority,
-                description: formState.description,
-                id: uuidv4(),
-                created: new Date()
-
-            })
+            postToDo()
+            setTodoList([...toDoList, formState])
         }
-        setFormState({title: "", completed: false, priority: "1", description: "", id: 0})
+        setFormState({title: "", completed: false, priority: "1", description: "", id: 0, created: new Date()})
 
     }
 
     function deleteTask(idParam) {
-         data.find((todo)=> todo.id === idParam)
-        axios.delete( urlall + idParam).then(()=> {
-               setTodoList(data)}
-        )}
+        toDoList.find((todo) => todo.id === idParam)
+        deleteInfo(idParam)
+        setTodoList(toDoList.filter((todo) => todo.id !== idParam)
+        )
+    }
 
-
-console.log(data)
-
-
-
-    function toggleCompleted(idParam) {
-       setTodoList(data.map((todo) =>
-            todo.id === idParam ? {...todo, completed: !todo.completed} : todo)
-       )}
 
     function sortPriority() {
         const newSortType = generateNewSortTypePriority(activeSortType);
-        const sortedTodos = sortTasksPriority(newSortType, data);
+        const sortedTodos = sortTasksPriority(newSortType, toDoList);
         setTodoList(sortedTodos);
         setActiveSortType(newSortType);
     }
 
     function sortCompleted() {
         const newSortType = generateNewSortTypeCompleted(activeSortType);
-        const sortedTodos = sortTasksCompleted(newSortType, data);
+        const sortedTodos = sortTasksCompleted(newSortType, toDoList);
         setTodoList(sortedTodos);
         setActiveSortType(newSortType);
 
     }
+
+
 
     return (
         <div className="container">
             <Navigation/>
             <main>
                 <form onSubmit={handleSubmit}>
-                  <Inputfield
-                        title= "title"
-                        titleid= "todotitle"
-                        text= "Add a title here"
-                        handle= {handleChange}
-                        value= {formState.title}
+                    <Inputfield
+                        title="title"
+                        titleid="todotitle"
+                        text="Add a title here"
+                        handle={handleChange}
+                        value={formState.title}
                     />
                     <Inputfield
-                        title= "description"
-                        titleid= "tododescription"
-                        text= "Add a description here"
-                        handle= {handleChange}
-                        value= {formState.description}
+                        title="description"
+                        titleid="tododescription"
+                        text="Add a description here"
+                        handle={handleChange}
+                        value={formState.description}
                     />
                     <label htmlFor="selectpriority">Priority
                         <select
@@ -148,11 +193,12 @@ console.log(data)
                 <h2>All the things to do</h2>
                 <section className="toDoList">
                     <ul>
-                        {data.map((todo, index) => {
+                        {error && <p>{error}</p>}
+                        {toDoList.map((todo, index) => {
                             return <TodoItem
                                 key={todo.id}
                                 todo={todo}
-                                toggleCompleted={toggleCompleted}
+                                toggleCompleted={editCompleted}
                                 deleteTask={deleteTask}
                             />
                         })}

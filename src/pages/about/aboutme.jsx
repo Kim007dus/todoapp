@@ -2,8 +2,28 @@ import Navigation from "../../components/navigation.jsx";
 import Footer from "../../components/footer.jsx";
 import kim from "../../assets/aboutme.jpg";
 import "./aboutme.css"
+import axios from "axios";
+import {useEffect, useState} from "react";
+
+
 
 function Aboutme() {
+    const urip = 'http://localhost:3000/profile'
+    const [error, setError] = useState('');
+    const [aboutme, setAboutme] = useState([{}]);
+
+    async function fetchProfile() {
+        try {
+           const result =  await axios.get(urip).then((res) => setAboutme(res.data));
+        } catch (error) {
+            console.error(error)
+            setError('Oops, something went wrong. Please try again later.')
+        }
+    }
+    useEffect(() => {
+        fetchProfile();
+    }, []);
+
     return (
         <div className="container">
             <Navigation/>
@@ -12,12 +32,12 @@ function Aboutme() {
                 <article className="aboutme">
                     <img src={kim} alt="Kim Raven"/>
                     <section className="aboutme-text">
-                    <p>My name is Kim Raven, I am 38 years old and started in 2023 with learning for full stack
-                        developer. First I did some self study with The Odin Project. In july I started with the full
-                        stack development bootcamp.</p>
-                    <p>This to do app is made for the first part of the bootcamp. I used html, css, javascript and React
-                        to made this application. I really enjoyed making it and hope you enjoy using it.</p>
-                    <p>For more information about the project and to see my other projects go to <a href="https://github.com/Kim007dus" target="_blank">my Github</a>.</p>
+                        {error && <p>{error}</p>}
+                            <p>{aboutme.textone}</p>
+                            <p>{aboutme.texttwo}</p>
+                            <p>{aboutme.endgithub}<a href={aboutme.github}> Github</a>.</p>
+                            <p>{aboutme.endemail}<a href={aboutme.email}> email.</a>.</p>
+
                     </section>
                     </article>
             </main>

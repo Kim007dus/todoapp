@@ -13,8 +13,8 @@ function Navigation() {
 
                 <ul>
                     <li><NavLink to="/" className={ ({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Home</NavLink></li>
-                    {/*<li><NavLink to="/details/:id" className={ ({isActive}) => isActive === true ? 'active-link' : 'default-link'}>Details</NavLink></li>*/}
                     <li><NavLink to="/aboutme" className={ ({isActive}) => isActive === true ? 'active-link' : 'default-link'}>About me</NavLink></li>
+
                 </ul>
             </div>
         </nav>

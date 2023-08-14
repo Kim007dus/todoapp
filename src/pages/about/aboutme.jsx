@@ -25,8 +25,7 @@ function Aboutme() {
     }, []);
 
     return (
-        <div className="container">
-            <Navigation/>
+        <>
             <main>
                 <h2>About me</h2>
                 <article className="aboutme">
@@ -41,8 +40,8 @@ function Aboutme() {
                     </section>
                     </article>
             </main>
-            <Footer/>
-        </div>
+
+        </>
 );
 }
 

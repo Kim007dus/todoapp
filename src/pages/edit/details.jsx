@@ -103,8 +103,8 @@ function Details() {
 
 
         return (
-            <div className="container">
-                <Navigation/>
+            <>
+
                 <main className="maindetails">
                     <p className="breadcrumb">home > To Do > details</p>
                     <section className="buttonsection detail">
@@ -159,8 +159,8 @@ function Details() {
                     </section>
                 <button className="homebutton" type="button"><NavLink to={'/'}>Back to the To Do list</NavLink></button>
                 </main>
-                <Footer/>
-            </div>
+
+            </>
         );
     }
 

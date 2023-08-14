@@ -107,7 +107,7 @@ function App() {
         });
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         if (formState.title === "") {
             return alert("❌ Please add the title of you to do...")
@@ -145,8 +145,7 @@ function App() {
 
 
     return (
-        <div className="container">
-            <Navigation/>
+        <>
             <main>
                 <form onSubmit={handleSubmit}>
                     <Inputfield
@@ -207,8 +206,8 @@ function App() {
                     </ul>
                 </section>
             </main>
-            <Footer/>
-        </div>
+
+        </>
     )
 }
 
